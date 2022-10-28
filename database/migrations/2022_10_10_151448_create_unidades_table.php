@@ -13,19 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('asignaturas', function (Blueprint $table) {
+        Schema::create('unidades', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100);
-            $table->enum('cuatrimestre', [0, 1, 2, 3, 4, 5, 7, 8, 9, 10]);
+            $table->string('nombre');
             $table->unsignedTinyInteger('ht');
             $table->unsignedTinyInteger('hp');
-            $table->unsignedTinyInteger('htotales');
-            $table->unsignedTinyInteger('htsemana');
-            $table->string('objetivo');
-            $table->foreignId('progedu_id')
-                ->onDelete('set null')
-                ->onUpdate('cascade')
-                ->constrained('progedu');
+            $table->foreignId('asignatura_id')
+                ->constrained('asignaturas')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->text('objetivo');
+            $table->text('resultado_aprendizaje');
+            $table->text('secuencia_aprendizaje');
+            $table->string('espacios_formativos')->nullable();
             $table->timestamps();
         });
     }
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asignaturas');
+        Schema::dropIfExists('unidades');
     }
 };
